@@ -1,9 +1,13 @@
-function UserProfile(props) {
+// src/components/UserProfile.jsx
+import React from "react";
+
+function UserProfile({ name, age, bio }) {
   return (
-    <div style={{ border: "1px solid #ccc", padding: "16px", borderRadius: "8px", margin: "16px", maxWidth: "300px" }}>
-      <h2>{props.name}</h2>
-      <p>Age: {props.age}</p>
-      <p>{props.bio}</p>
+    <div>
+      <h2>User Profile</h2>
+      <p>Name: {name}</p>
+      <p>Age: {age}</p>
+      <p>Bio: {bio}</p> {/* Important: Must say "Bio" exactly */}
     </div>
   );
 }
