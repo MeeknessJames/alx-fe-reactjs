@@ -5,9 +5,10 @@ export const useRecipeStore = create((set) => ({
   filteredRecipes: [],
   searchTerm: '',
 
-  favorites: [],            
-  recommendations: [],      
+  favorites: [],             // array of recipe IDs
+  recommendations: [],       // array of recommended recipes
 
+  // Recipe actions
   addRecipe: (newRecipe) =>
     set((state) => ({
       recipes: [...state.recipes, newRecipe],
@@ -23,9 +24,10 @@ export const useRecipeStore = create((set) => ({
       ),
     })),
 
+  // Favorites actions
   addFavorite: (recipeId) =>
     set((state) => ({
-      favorites: [...new Set([...state.favorites, recipeId])],
+      favorites: [...new Set([...state.favorites, recipeId])], // avoid duplicates
     })),
 
   removeFavorite: (recipeId) =>
@@ -33,6 +35,7 @@ export const useRecipeStore = create((set) => ({
       favorites: state.favorites.filter((id) => id !== recipeId),
     })),
 
+  // Recommendations (mock example: random favorite recipes)
   generateRecommendations: () =>
     set((state) => {
       const recommended = state.recipes.filter(
