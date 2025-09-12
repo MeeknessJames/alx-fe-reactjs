@@ -11,7 +11,6 @@ function App() {
     <BrowserRouter>
       <div style={{ padding: '16px', fontFamily: 'Arial' }}>
         <h1>Recipe Sharing App</h1>
-
         <Routes>
           <Route
             path="/"
@@ -25,7 +24,6 @@ function App() {
               </>
             }
           />
-
           <Route path="/recipes/:id" element={<RecipeDetails />} />
         </Routes>
       </div>
