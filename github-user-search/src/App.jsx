@@ -1,10 +1,9 @@
-import Search from "./components/Search";
-
 function App() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
-      <h1 className="text-3xl font-bold mb-6">GitHub User Search</h1>
-      <Search />
+    <div className="text-center mt-10">
+      <h1 className="text-4xl font-bold text-blue-500">
+        Tailwind is Working 🚀
+      </h1>
     </div>
   );
 }
