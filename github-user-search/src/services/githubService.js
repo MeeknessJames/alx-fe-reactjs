@@ -1,9 +1,17 @@
 import axios from "axios";
 
-// Advanced search using GitHub Search API
+export const fetchUserData = async (username) => {
+  try {
+    const response = await axios.get(`https://api.github.com/users/${username}`);
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to fetch user");
+  }
+};
+
 export const searchUsers = async (username, location, minRepos) => {
   try {
-    // Construct the search query
+
     let query = "";
     if (username) query += `${username} `;
     if (location) query += `location:${location} `;
@@ -13,7 +21,7 @@ export const searchUsers = async (username, location, minRepos) => {
       `https://api.github.com/search/users?q=${encodeURIComponent(query)}`
     );
 
-    return response.data.items; // returns an array of users
+    return response.data.items;
   } catch (error) {
     throw new Error("Search failed");
   }
