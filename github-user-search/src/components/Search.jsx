@@ -18,7 +18,7 @@ export default function Search() {
       const user = await fetchUserData(username);
       setUserResults([user]); // Wrap in array for consistent rendering
     } catch (err) {
-      setError("Looks like we can't find the user");
+      setError("Looks like we cant find the user");
       setUserResults([]);
     } finally {
       setLoading(false);
