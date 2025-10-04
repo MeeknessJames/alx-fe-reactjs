@@ -1,41 +1,49 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import data from "../data.json";
 
-const HomePage = ({ recipes }) => {
+const HomePage = () => {
+  const [recipes, setRecipes] = useState([]);
+
+  useEffect(() => {
+    // Load data from the local JSON file
+    setRecipes(data);
+  }, []);
+
   return (
-    <div className="min-h-screen py-10 bg-gradient-to-r from-green-100 via-blue-100 to-pink-100">
+    <div className="min-h-screen py-8 bg-gradient-to-r from-green-100 via-blue-100 to-pink-100">
       <div className="container mx-auto px-4">
-        <h1 className="text-5xl font-extrabold mb-8 text-center text-gray-800 drop-shadow-md">
-          🍽️ Recipe Sharing Platform
+        <h1 className="text-4xl font-bold mb-6 text-center text-gray-800">
+          🍴 Recipe Sharing Platform
         </h1>
 
-        <div className="flex justify-center mb-8">
+        <div className="flex justify-center mb-6">
           <Link
             to="/add-recipe"
-            className="bg-gradient-to-r from-green-500 to-teal-500 text-white font-semibold px-5 py-3 rounded-lg shadow-lg hover:opacity-90 transition-all duration-300"
+            className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors"
           >
             ➕ Add New Recipe
           </Link>
         </div>
 
-        <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {recipes.map((recipe) => (
             <div
               key={recipe.id}
-              className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1"
+              className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden"
             >
               <img
                 src={recipe.image}
                 alt={recipe.title}
-                className="w-full h-52 object-cover"
+                className="w-full h-56 object-cover"
               />
-              <div className="p-6">
-                <h2 className="text-2xl font-semibold mb-2 text-gray-800">
+              <div className="p-4">
+                <h2 className="text-xl font-semibold mb-2 text-gray-800">
                   {recipe.title}
                 </h2>
-                <p className="text-gray-600 mb-4">{recipe.summary}</p>
+                <p className="text-gray-600">{recipe.summary}</p>
                 <Link to={`/recipe/${recipe.id}`}>
-                  <button className="w-full bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-medium px-4 py-2 rounded-md hover:opacity-90 transition-all duration-300">
+                  <button className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors">
                     View Recipe
                   </button>
                 </Link>
