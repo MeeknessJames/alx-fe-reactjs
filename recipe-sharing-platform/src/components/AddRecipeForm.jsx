@@ -1,112 +1,86 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
-const AddRecipeForm = ({ recipes, setRecipes }) => {
+const AddRecipeForm = () => {
   const [title, setTitle] = useState("");
   const [ingredients, setIngredients] = useState("");
-  const [instructions, setInstructions] = useState("");
-  const [errors, setErrors] = useState({});
-  const navigate = useNavigate();
+  const [steps, setSteps] = useState(""); 
+  const [error, setError] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const newErrors = {};
-    if (!title.trim()) newErrors.title = "Title is required";
-    if (!ingredients.trim()) newErrors.ingredients = "Ingredients are required";
-    else if (ingredients.split(",").length < 2)
-      newErrors.ingredients = "Please list at least two ingredients";
-    if (!instructions.trim()) newErrors.instructions = "Instructions are required";
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
+    if (!title || !ingredients || !steps) {
+      setError("Please fill in all fields before submitting.");
       return;
     }
 
     const newRecipe = {
-      id: Date.now(),
       title,
-      summary: instructions.substring(0, 100) + "...",
-      ingredients: ingredients.split(",").map((item) => item.trim()),
-      instructions: instructions.split("\n").map((item) => item.trim()),
-      image: "https://via.placeholder.com/300x200",
+      ingredients: ingredients.split(",").map((i) => i.trim()),
+      steps: steps.split(".").map((s) => s.trim()),
     };
+    console.log("New Recipe Added:", newRecipe);
 
-    setRecipes([...recipes, newRecipe]);
-
-    // Reset form
     setTitle("");
     setIngredients("");
-    setInstructions("");
-    setErrors({});
-
-    // Redirect to home page
-    navigate("/");
+    setSteps("");
+    setError("");
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen flex items-center justify-center py-10">
+    <div className="min-h-screen py-10 flex items-center justify-center bg-gradient-to-r from-green-100 via-blue-100 to-pink-100">
       <form
-        className="bg-white p-6 rounded-lg shadow-md w-full max-w-lg"
         onSubmit={handleSubmit}
+        className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg"
       >
-        <h2 className="text-2xl font-bold mb-6 text-center">Add New Recipe</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
+          Add a New Recipe
+        </h2>
 
-        {/* Title */}
+        {error && (
+          <p className="text-red-500 text-center mb-4 font-medium">{error}</p>
+        )}
+
         <div className="mb-4">
-          <label className="block text-gray-700 mb-2">Recipe Title</label>
+          <label className="block text-gray-700 font-semibold mb-2">
+            Recipe Title
+          </label>
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className={`w-full px-4 py-2 border rounded focus:outline-none focus:ring ${
-              errors.title ? "border-red-500" : "border-gray-300"
-            }`}
+            className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-green-400 focus:outline-none"
             placeholder="Enter recipe title"
           />
-          {errors.title && <p className="text-red-500 text-sm mt-1">{errors.title}</p>}
         </div>
 
-        {/* Ingredients */}
         <div className="mb-4">
-          <label className="block text-gray-700 mb-2">
-            Ingredients (separate with commas)
+          <label className="block text-gray-700 font-semibold mb-2">
+            Ingredients (comma-separated)
           </label>
           <textarea
             value={ingredients}
             onChange={(e) => setIngredients(e.target.value)}
-            className={`w-full px-4 py-2 border rounded focus:outline-none focus:ring ${
-              errors.ingredients ? "border-red-500" : "border-gray-300"
-            }`}
-            rows={4}
-            placeholder="e.g., 200g spaghetti, 100g pancetta, 2 eggs"
-          ></textarea>
-          {errors.ingredients && (
-            <p className="text-red-500 text-sm mt-1">{errors.ingredients}</p>
-          )}
+            className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-green-400 focus:outline-none"
+            placeholder="e.g., flour, sugar, eggs"
+          />
         </div>
 
-        {/* Instructions */}
         <div className="mb-4">
-          <label className="block text-gray-700 mb-2">Preparation Steps</label>
+          <label className="block text-gray-700 font-semibold mb-2">
+            Preparation Steps
+          </label>
           <textarea
-            value={instructions}
-            onChange={(e) => setInstructions(e.target.value)}
-            className={`w-full px-4 py-2 border rounded focus:outline-none focus:ring ${
-              errors.instructions ? "border-red-500" : "border-gray-300"
-            }`}
-            rows={6}
-            placeholder="Write each step on a new line"
-          ></textarea>
-          {errors.instructions && (
-            <p className="text-red-500 text-sm mt-1">{errors.instructions}</p>
-          )}
+            value={steps}
+            onChange={(e) => setSteps(e.target.value)}
+            className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-green-400 focus:outline-none"
+            placeholder="Write each step separated by a period."
+          />
         </div>
 
-        {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition-colors"
+          className="w-full bg-green-500 text-white py-2 rounded-lg font-semibold hover:bg-green-600 transition-transform transform hover:scale-105"
         >
           Submit Recipe
         </button>
