@@ -1,5 +1,11 @@
 import React from "react";
 
 export default function ProfileDetails() {
-  return <p>This is the Profile Details section.</p>;
+  return (
+    <div>
+      <h3>Profile Details</h3>
+      <p>Name: Jane Doe</p>
+      <p>Email: jane@example.com</p>
+    </div>
+  );
 }

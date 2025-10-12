@@ -5,7 +5,7 @@ import ProfileSettings from "./ProfileSettings";
 
 export default function Profile() {
   return (
-    <div>
+    <div style={{ padding: 20 }}>
       <h2>Profile Page</h2>
       <nav>
         <Link to="details">Details</Link> |{" "}

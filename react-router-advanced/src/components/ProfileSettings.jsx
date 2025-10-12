@@ -1,5 +1,10 @@
 import React from "react";
 
 export default function ProfileSettings() {
-  return <p>This is the Profile Settings section.</p>;
+  return (
+    <div>
+      <h3>Profile Settings</h3>
+      <p>Manage your account settings here.</p>
+    </div>
+  );
 }
