@@ -13,6 +13,10 @@ function PostsComponent() {
   const { data, isLoading, isError, error, refetch } = useQuery({
     queryKey: ["posts"],
     queryFn: fetchPosts,
+    cacheTime: 1000 * 60 * 5,
+    staleTime: 1000 * 30,
+    refetchOnWindowFocus: false,
+    keepPreviousData: true,
   });
 
   if (isLoading) {
@@ -28,7 +32,8 @@ function PostsComponent() {
       <h2>React Query Demo: Fetching Posts</h2>
       <p>
         Demonstrating <strong>React Query caching</strong> and{" "}
-        <strong>data refetch interaction</strong>.
+        <strong>data refetch interaction</strong> with cacheTime, staleTime,
+        refetchOnWindowFocus, and keepPreviousData.
       </p>
       <button onClick={() => refetch()}>Refetch Posts</button>
       <ul>
