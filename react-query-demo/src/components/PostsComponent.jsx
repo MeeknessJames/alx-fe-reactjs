@@ -10,7 +10,7 @@ function PostsComponent() {
     return response.json();
   };
 
-  const { data, isLoading, error, refetch } = useQuery({
+  const { data, isLoading, isError, error, refetch } = useQuery({
     queryKey: ["posts"],
     queryFn: fetchPosts,
   });
@@ -19,7 +19,7 @@ function PostsComponent() {
     return <p>Loading posts...</p>;
   }
 
-  if (error) {
+  if (isError) {
     return <p>Error fetching posts: {error.message}</p>;
   }
 
@@ -27,7 +27,7 @@ function PostsComponent() {
     <div style={{ padding: "20px" }}>
       <h2>React Query Demo: Fetching Posts</h2>
       <p>
-        This demonstrates <strong>React Query caching</strong> and{" "}
+        Demonstrating <strong>React Query caching</strong> and{" "}
         <strong>data refetch interaction</strong>.
       </p>
       <button onClick={() => refetch()}>Refetch Posts</button>
