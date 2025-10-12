@@ -1,38 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
-import Profile from "./pages/Profile";
 import BlogPost from "./pages/BlogPost";
+import Profile from "./components/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-export default function App() {
+function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
   return (
     <BrowserRouter>
-      <nav style={{ display: "flex", gap: "1rem", marginBottom: "1rem" }}>
-        <Link to="/">Home</Link>
-        <Link to="/about">About</Link>
-        <Link to="/profile">Profile</Link>
-        <Link to="/blog/1">Blog Post</Link>
+      <nav style={{ marginBottom: "20px" }}>
+        <Link to="/">Home</Link> |{" "}
+        <Link to="/about">About</Link> |{" "}
+        <Link to="/profile">Profile</Link> |{" "}
+        <Link to="/post/1">Blog Post</Link> |{" "}
+        <button onClick={() => setIsAuthenticated(!isAuthenticated)}>
+          {isAuthenticated ? "Logout" : "Login"}
+        </button>
       </nav>
 
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="/post/:id" element={<BlogPost />} />
 
-        {/* Protected Route */}
+        {/* Protected Route Example */}
         <Route
           path="/profile/*"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
               <Profile />
             </ProtectedRoute>
           }
         />
-
-        {/* Dynamic route */}
-        <Route path="/blog/:id" element={<BlogPost />} />
       </Routes>
     </BrowserRouter>
   );
 }
+
+export default App;
