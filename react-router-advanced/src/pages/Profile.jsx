@@ -6,10 +6,10 @@ import ProfileSettings from "./ProfileSettings";
 export default function Profile() {
   return (
     <div>
-      <h2>Profile Page (Protected)</h2>
-      <nav>
-        <Link to="details">Profile Details</Link> |{" "}
-        <Link to="settings">Profile Settings</Link>
+      <h2>Profile Page</h2>
+      <nav style={{ marginBottom: "1rem" }}>
+        <Link to="details">Details</Link> |{" "}
+        <Link to="settings">Settings</Link>
       </nav>
 
       <Routes>

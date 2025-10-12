@@ -1,19 +1,18 @@
 import React from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Profile from "./pages/Profile";
 import BlogPost from "./pages/BlogPost";
-import Login from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-function App() {
+export default function App() {
   return (
-    <div>
-      <nav style={{ marginBottom: "20px" }}>
-        <Link to="/">Home</Link> |{" "}
-        <Link to="/about">About</Link> |{" "}
-        <Link to="/profile">Profile</Link> |{" "}
+    <BrowserRouter>
+      <nav style={{ display: "flex", gap: "1rem", marginBottom: "1rem" }}>
+        <Link to="/">Home</Link>
+        <Link to="/about">About</Link>
+        <Link to="/profile">Profile</Link>
         <Link to="/blog/1">Blog Post</Link>
       </nav>
 
@@ -31,12 +30,9 @@ function App() {
           }
         />
 
-        {/* Dynamic Route */}
+        {/* Dynamic route */}
         <Route path="/blog/:id" element={<BlogPost />} />
-        <Route path="/login" element={<Login />} />
       </Routes>
-    </div>
+    </BrowserRouter>
   );
 }
-
-export default App;
