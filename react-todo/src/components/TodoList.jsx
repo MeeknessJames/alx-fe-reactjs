@@ -1,46 +1,63 @@
 import React, { useState } from "react";
-import AddTodoForm from "./AddTodoForm";
 
-function TodoList() {
+export default function TodoList() {
+  // Initial demo todos
   const [todos, setTodos] = useState([
     { id: 1, text: "Learn React", completed: false },
-    { id: 2, text: "Build a Todo App", completed: false },
+    { id: 2, text: "Build Todo App", completed: false },
   ]);
 
-  const addTodo = (text) => {
-    const newTodo = { id: Date.now(), text, completed: false };
-    setTodos([...todos, newTodo]);
+  const [newTodo, setNewTodo] = useState("");
+
+  // Add todo
+  const addTodo = (e) => {
+    e.preventDefault();
+    if (newTodo.trim() === "") return;
+    const newItem = { id: Date.now(), text: newTodo.trim(), completed: false };
+    setTodos((t) => [...t, newItem]);
+    setNewTodo("");
   };
 
+  // Toggle todo
   const toggleTodo = (id) => {
-    setTodos(
-      todos.map((todo) =>
+    setTodos((t) =>
+      t.map((todo) =>
         todo.id === id ? { ...todo, completed: !todo.completed } : todo
       )
     );
   };
 
+  // Delete todo
   const deleteTodo = (id) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
+    setTodos((t) => t.filter((todo) => todo.id !== id));
   };
 
   return (
     <div>
-      <h1>Todo List</h1>
-      <AddTodoForm addTodo={addTodo} />
-      <ul>
+      <form onSubmit={addTodo} aria-label="add-todo-form">
+        <input
+          aria-label="new-todo-input"
+          placeholder="Add new todo"
+          value={newTodo}
+          onChange={(e) => setNewTodo(e.target.value)}
+        />
+        <button type="submit">Add</button>
+      </form>
+
+      <ul aria-label="todo-list">
         {todos.map((todo) => (
           <li
             key={todo.id}
-            data-testid="todo-item"
+            data-testid={`todo-${todo.id}`}
             onClick={() => toggleTodo(todo.id)}
             style={{
               textDecoration: todo.completed ? "line-through" : "none",
               cursor: "pointer",
             }}
           >
-            {todo.text}
+            <span>{todo.text}</span>
             <button
+              aria-label={`delete-${todo.id}`}
               onClick={(e) => {
                 e.stopPropagation();
                 deleteTodo(todo.id);
@@ -54,5 +71,3 @@ function TodoList() {
     </div>
   );
 }
-
-export default TodoList;

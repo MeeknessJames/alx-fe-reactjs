@@ -1,34 +1,41 @@
+import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import TodoList from "../components/TodoList";
 
-test("renders initial todos", () => {
-  render(<TodoList />);
-  expect(screen.getByText("Learn React")).toBeInTheDocument();
-  expect(screen.getByText("Build a Todo App")).toBeInTheDocument();
-});
+describe("TodoList component", () => {
+  test("renders initial todos", () => {
+    render(<TodoList />);
+    expect(screen.getByText("Learn React")).toBeInTheDocument();
+    expect(screen.getByText("Build Todo App")).toBeInTheDocument();
+  });
 
-test("adds a new todo", () => {
-  render(<TodoList />);
-  const input = screen.getByPlaceholderText("Add a new todo");
-  const addButton = screen.getByText("Add");
+  test("adds a new todo", () => {
+    render(<TodoList />);
+    const input = screen.getByLabelText("new-todo-input");
+    const addButton = screen.getByText("Add");
 
-  fireEvent.change(input, { target: { value: "New Todo" } });
-  fireEvent.click(addButton);
+    fireEvent.change(input, { target: { value: "Write Tests" } });
+    fireEvent.click(addButton);
 
-  expect(screen.getByText("New Todo")).toBeInTheDocument();
-});
+    expect(screen.getByText("Write Tests")).toBeInTheDocument();
+  });
 
-test("toggles a todo", () => {
-  render(<TodoList />);
-  const todo = screen.getByText("Learn React");
-  fireEvent.click(todo);
-  expect(todo).toHaveStyle("text-decoration: line-through");
-});
+  test("toggles a todo item (line-through)", () => {
+    render(<TodoList />);
+    const todoText = screen.getByText("Learn React");
+    const todoItem = todoText.closest("li"); 
+    fireEvent.click(todoItem);
+    expect(todoItem).toHaveStyle({ textDecoration: "line-through" });
+  });
 
-test("deletes a todo", () => {
-  render(<TodoList />);
-  const deleteButtons = screen.getAllByText("Delete");
-  fireEvent.click(deleteButtons[0]);
-  expect(screen.queryByText("Learn React")).not.toBeInTheDocument();
+
+  test("deletes a todo", () => {
+    render(<TodoList />);
+    const todo = screen.getByText("Learn React");
+    const li = todo.closest("li");
+    const deleteButton = li.querySelector("button[aria-label^='delete-']");
+    fireEvent.click(deleteButton);
+    expect(screen.queryByText("Learn React")).not.toBeInTheDocument();
+  });
 });
